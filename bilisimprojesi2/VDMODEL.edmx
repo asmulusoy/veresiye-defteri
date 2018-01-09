@@ -1,0 +1,202 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="vddatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ayarlar">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="hizliislem" Type="bit" />
+          <Property Name="tarihsaatgosterimi" Type="bit" />
+          <Property Name="sifresorma" Type="bit" />
+          <Property Name="k_adi" Type="nvarchar" MaxLength="50" />
+          <Property Name="sifre" Type="nvarchar" MaxLength="50" />
+          <Property Name="isletme_adi" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="carihareket">
+          <Key>
+            <PropertyRef Name="ch_id" />
+          </Key>
+          <Property Name="ch_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ch_urun" Type="nvarchar" MaxLength="50" />
+          <Property Name="ch_tutar" Type="smallmoney" />
+          <Property Name="ch_tarih" Type="date" />
+          <Property Name="ch_aciklama" Type="nvarchar(max)" />
+          <Property Name="m_id" Type="int" />
+          <Property Name="ch_harekettipi" Type="bit" />
+        </EntityType>
+        <EntityType Name="musteriler">
+          <Key>
+            <PropertyRef Name="m_id" />
+          </Key>
+          <Property Name="m_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="m_ad" Type="nvarchar" MaxLength="50" />
+          <Property Name="m_soyad" Type="nvarchar" MaxLength="50" />
+          <Property Name="m_telefon" Type="nvarchar" MaxLength="50" />
+          <Property Name="m_ceptel" Type="nvarchar" MaxLength="50" />
+          <Property Name="m_mail" Type="nvarchar" MaxLength="50" />
+          <Property Name="m_tc" Type="nvarchar" MaxLength="50" />
+          <Property Name="m_adres" Type="nvarchar(max)" />
+          <Property Name="m_aciklama" Type="nvarchar(max)" />
+        </EntityType>
+        <Association Name="FK_carihareket_musteriler">
+          <End Role="musteriler" Type="Self.musteriler" Multiplicity="0..1" />
+          <End Role="carihareket" Type="Self.carihareket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="musteriler">
+              <PropertyRef Name="m_id" />
+            </Principal>
+            <Dependent Role="carihareket">
+              <PropertyRef Name="m_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="vddatabaseModelStoreContainer">
+          <EntitySet Name="ayarlar" EntityType="Self.ayarlar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="carihareket" EntityType="Self.carihareket" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="musteriler" EntityType="Self.musteriler" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_carihareket_musteriler" Association="Self.FK_carihareket_musteriler">
+            <End Role="musteriler" EntitySet="musteriler" />
+            <End Role="carihareket" EntitySet="carihareket" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="vddatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ayarlar">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="hizliislem" Type="Boolean" />
+          <Property Name="tarihsaatgosterimi" Type="Boolean" />
+          <Property Name="sifresorma" Type="Boolean" />
+          <Property Name="k_adi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="sifre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="isletme_adi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="carihareket">
+          <Key>
+            <PropertyRef Name="ch_id" />
+          </Key>
+          <Property Name="ch_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ch_urun" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ch_tutar" Type="Decimal" Precision="10" Scale="4" />
+          <Property Name="ch_tarih" Type="DateTime" Precision="0" />
+          <Property Name="ch_aciklama" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="m_id" Type="Int32" />
+          <Property Name="ch_harekettipi" Type="Boolean" />
+          <NavigationProperty Name="musteriler" Relationship="Self.FK_carihareket_musteriler" FromRole="carihareket" ToRole="musteriler" />
+        </EntityType>
+        <EntityType Name="musteriler">
+          <Key>
+            <PropertyRef Name="m_id" />
+          </Key>
+          <Property Name="m_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="m_ad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="m_soyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="m_telefon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="m_ceptel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="m_mail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="m_tc" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="m_adres" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="m_aciklama" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="cariharekets" Relationship="Self.FK_carihareket_musteriler" FromRole="musteriler" ToRole="carihareket" />
+        </EntityType>
+        <Association Name="FK_carihareket_musteriler">
+          <End Role="musteriler" Type="Self.musteriler" Multiplicity="0..1" />
+          <End Role="carihareket" Type="Self.carihareket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="musteriler">
+              <PropertyRef Name="m_id" />
+            </Principal>
+            <Dependent Role="carihareket">
+              <PropertyRef Name="m_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="vdEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ayarlars" EntityType="Self.ayarlar" />
+          <EntitySet Name="cariharekets" EntityType="Self.carihareket" />
+          <EntitySet Name="musterilers" EntityType="Self.musteriler" />
+          <AssociationSet Name="FK_carihareket_musteriler" Association="Self.FK_carihareket_musteriler">
+            <End Role="musteriler" EntitySet="musterilers" />
+            <End Role="carihareket" EntitySet="cariharekets" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="vddatabaseModelStoreContainer" CdmEntityContainer="vdEntities">
+          <EntitySetMapping Name="ayarlars">
+            <EntityTypeMapping TypeName="vddatabaseModel.ayarlar">
+              <MappingFragment StoreEntitySet="ayarlar">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="hizliislem" ColumnName="hizliislem" />
+                <ScalarProperty Name="tarihsaatgosterimi" ColumnName="tarihsaatgosterimi" />
+                <ScalarProperty Name="sifresorma" ColumnName="sifresorma" />
+                <ScalarProperty Name="k_adi" ColumnName="k_adi" />
+                <ScalarProperty Name="sifre" ColumnName="sifre" />
+                <ScalarProperty Name="isletme_adi" ColumnName="isletme_adi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cariharekets">
+            <EntityTypeMapping TypeName="vddatabaseModel.carihareket">
+              <MappingFragment StoreEntitySet="carihareket">
+                <ScalarProperty Name="ch_id" ColumnName="ch_id" />
+                <ScalarProperty Name="ch_urun" ColumnName="ch_urun" />
+                <ScalarProperty Name="ch_tutar" ColumnName="ch_tutar" />
+                <ScalarProperty Name="ch_tarih" ColumnName="ch_tarih" />
+                <ScalarProperty Name="ch_aciklama" ColumnName="ch_aciklama" />
+                <ScalarProperty Name="m_id" ColumnName="m_id" />
+                <ScalarProperty Name="ch_harekettipi" ColumnName="ch_harekettipi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="musterilers">
+            <EntityTypeMapping TypeName="vddatabaseModel.musteriler">
+              <MappingFragment StoreEntitySet="musteriler">
+                <ScalarProperty Name="m_id" ColumnName="m_id" />
+                <ScalarProperty Name="m_ad" ColumnName="m_ad" />
+                <ScalarProperty Name="m_soyad" ColumnName="m_soyad" />
+                <ScalarProperty Name="m_telefon" ColumnName="m_telefon" />
+                <ScalarProperty Name="m_ceptel" ColumnName="m_ceptel" />
+                <ScalarProperty Name="m_mail" ColumnName="m_mail" />
+                <ScalarProperty Name="m_tc" ColumnName="m_tc" />
+                <ScalarProperty Name="m_adres" ColumnName="m_adres" />
+                <ScalarProperty Name="m_aciklama" ColumnName="m_aciklama" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
